@@ -1,4 +1,5 @@
-#empty just href
+#for empty href in comments site
+
 function empty_just_href($comment, $status = true)
 {
     if (!$status)
