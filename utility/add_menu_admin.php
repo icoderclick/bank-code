@@ -1,4 +1,4 @@
-?>
+<?
 
 #this funcs for add menu admin and delete first submenu
 
@@ -13,23 +13,13 @@ function plugin_filter_link_register_menu()
         'فیلتر لینک',
         'manage_options',
         'filter-link-main',
-        'filter_link_page_main',
-        'dashicons-admin-links',
-        null
+        'filter_link_page_dashboard',
+        'dashicons-admin-links' // for icon wordpress: https://developer.wordpress.org/resource/dashicons/#admin-links
+    
     );
 
-    #word-link
-    add_submenu_page(
-        'filter-link-main',
-        'لینک کلمات',
-        'لینک کلمات',
-        'manage_options',
-        'filter-link-convert-word',
-        'filter_link_page_word_convert',
-        1
-    );
 
-    #setting
+    #setting page
     add_submenu_page(
         'filter-link-main',
         'تنظیمات',
@@ -45,28 +35,9 @@ function plugin_filter_link_register_menu()
 
 function filter_link_page_dashboard()
 {
+    echo 'this is dashboard page';
 }
 
-function filter_link_page_word_convert()
-{
-    include FL_PATH_DIR_VIEWS . 'admin/word-convert.php';
-    if (isset($_POST['btn_submit'])) {
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            #sanitize textarea
-            $words = sanitize_textarea_field($_POST['words']);
-
-            #string to array
-            $words=explode(',',$words);
-
-            #delete empty value
-            $words=array_filter($words);
-
-            update_option('_fl_words_list',$words);
-
-        }
-    }
-}
 
 function filter_link_page_setting()
 {
