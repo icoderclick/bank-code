@@ -24,3 +24,6 @@ function replace_text_link($comment, $replacement = '******', $status = true)
     return $comment;
 }
 add_filter('comment_text', 'replace_text_link');
+
+
+
