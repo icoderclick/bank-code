@@ -1,3 +1,5 @@
+<?php
+
 #this code for comments
 
 function replace_text_link($comment, $replacement = '******', $status = true)
