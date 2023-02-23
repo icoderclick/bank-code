@@ -1,23 +1,30 @@
-<?
+
 
 //for add meta box and meta data in post and page
 //this code is very security 
 
+<?
 
+
+//step 1 : set hook add_meta_boxes | f.e:
+add_action('add_meta_boxes', 'fl_register_meta_boxes');
+
+
+//step 2 : set function hook and add metabox with api add_meta_box | f.e: in this sample has been added two metabox
 function fl_register_meta_boxes()
 {
-
+    //api
     add_meta_box(
         'fl_video_url_meta_box',
         'لینک ویدیو',
         'fl_video_url_callback_html',
-        '',
+        '',  //screen : post,page
         'normal',
         'high',
         ''
     );
 
-  
+  //api
     add_meta_box(
         'fl_price_meta_box',
         'قیمت',
@@ -30,7 +37,9 @@ function fl_register_meta_boxes()
 
 }
 
-//for html video_url
+
+
+//step 3 : set callback function and add nonce field for security | f.e:
 function fl_video_url_callback_html($post)
 {
     //security: Add an nonce field (require)
@@ -46,7 +55,7 @@ function fl_video_url_callback_html($post)
 
 function fl_price_callback_html($post)
 {
-    
+    //security: Add an nonce field (require)
     wp_nonce_field('fl_nonce_action_price', 'fl_nonce_name_price');
     ?>
     <label for="">قیمت</label>
@@ -54,12 +63,18 @@ function fl_price_callback_html($post)
     <?php
 }
 
-//for save meta box
 
+
+
+//step 4 : save data in DB with set hook save_post | f.e:
+add_action('save_post', 'fl_save_meta_box');
+
+
+//step 5 : set function hook and nonce security | f.e:
 function fl_save_meta_box($post_id)
 {
+    
     //security: check if our nonce is set (require)
-  
     if (!isset($_POST['fl_nonce_name_video_url']) && !isset($_POST['fl_nonce_name_price']))
         return $post_id;
 
@@ -67,13 +82,13 @@ function fl_save_meta_box($post_id)
     $nonce_price=$_POST['fl_nonce_name_price'];
 
 
-    /*security: verify that the nonce is valid; */
+    //security: verify that the nonce is valid
     if (!wp_verify_nonce($nonce_video_url, 'fl_nonce_action_video_url') &&
         !wp_verify_nonce($nonce_price, 'fl_nonce_action_price'))
         return $post_id;
 
 
-    /*security: deActive AutoSave for this fields (optional) */
+    //security: deActive AutoSave for this fields (optional)
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
         return $post_id;
     }
@@ -91,7 +106,7 @@ function fl_save_meta_box($post_id)
         }
     /* OK, it's safe for us to save the data now. */
 
-
+   //sanitize data and save in DB:
     if (!empty($_POST['link_video']) || !empty($_POST['price'])) {
       
         //Sanitize the user input and update data (require)
@@ -101,9 +116,7 @@ function fl_save_meta_box($post_id)
 
 }
 
-/* hook */
-add_action('add_meta_boxes', 'fl_register_meta_boxes');
-add_action('save_post', 'fl_save_meta_box');
+
 
 ?>
 
