@@ -1,4 +1,4 @@
-<?
+<?php
 
 //check ABSPATH set
 
