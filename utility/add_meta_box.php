@@ -18,7 +18,7 @@ function fl_register_meta_boxes()
         'fl_video_url_meta_box',
         'لینک ویدیو',
         'fl_video_url_callback_html',
-        '',  //screen : post,page
+        '',  //screen : post,page,dashboard
         'normal',
         'high',
         ''
