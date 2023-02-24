@@ -52,6 +52,17 @@ if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
     }
 
 //step four :check the user permission
+/*
+** list capability
+Read posts (read)
+Write and edit posts (edit_posts)
+Publish posts (publish_posts)
+Install plugins (install_plugins)
+Delete themes (delete_themes)
+Create users (create_users)
+Moderate comments (moderate_comments)
+... https://wordpress.org/documentation/article/roles-and-capabilities/
+*/
 if ( 'page' == $_POST['post_type'] ) {
             if ( ! current_user_can( 'edit_page', $post_id ) ) {
                 return $post_id;
