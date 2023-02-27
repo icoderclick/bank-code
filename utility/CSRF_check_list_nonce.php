@@ -12,6 +12,12 @@ this code for prevention attack CSRF and INJECTION in wordpress;
  * @return string Nonce field HTML markup.
  * "fl" is signature plugin
  */
+
+//if you have a form that action is "" , you must use this code for security:
+    <form action="<?= esc_url($_SERVER['PHP_SELF']).'?'.$_SERVER['QUERY_STRING']?>" method="post">
+
+
+
 wp_nonce_field('fl_nonce_action_video_url', 'fl_nonce_name_video_url');
 
 //f.e:
