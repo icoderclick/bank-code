@@ -1,5 +1,22 @@
 <?php
 
+#add role and set capability
+function add_custom_role(){
+   add_role('vip','vip',['read'=>true]);
+
+   $user_vip=get_role('vip');
+   $user_vip->add_cap('read_vip_post');
+
+   $user_admin=get_role('administrator');
+   $user_admin->add_cap('read_vip_post');
+
+
+}
+add_action('init','add_custom_role');
+
+
+
+
 A list of all possible Capabilities per user roles:
 https://wordpress.org/support/article/roles-and-capabilities/#capability-vs-role-table
 
